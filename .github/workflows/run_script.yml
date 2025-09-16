@@ -1,11 +1,10 @@
 name: Run Telegram to WP script
 
 on:
-  schedule:
-    - cron: '0 */4 * * *'  # каждые 4 часа
+  workflow_dispatch:
   push:
     branches:
-      - main  # или ваша ветка
+      - main
 
 jobs:
   run-script:
@@ -18,11 +17,11 @@ jobs:
           python-version: '3.x'
       - name: Install dependencies
         run: |
-          pip install requests python-telegram-bot
-      - name: Run script
-        run: |
-          python scripts/main.py
+          pip install requests telethon
+      - name: Run Telethon script
+        run: python scripts/import_telegram_to_wp.py
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_API_ID: ${{ secrets.TG_API_ID }}
+          TG_API_HASH: ${{ secrets.TG_API_HASH }}
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
           WP_PASSWORD: ${{ secrets.WP_PASSWORD }}
