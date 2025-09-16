@@ -7,7 +7,7 @@ TELEGRAM_BOT_TOKEN = '7538707363:AAFgCzDNTHzdn7stuXAxltnp50uEX9PrOZc'  # ваш 
 TELEGRAM_CHANNEL_ID = '@printtehnics'  # замените на ваш канал или ID
 WP_URL = 'http://printtechlab.ru/wp-json/wp/v2/posts'
 WP_USERNAME = 'telegram bot'  # вставьте ваш логин
-WP_PASSWORD = 'ваш_пароль'  # вставьте ваш пароль (или Application Password)
+WP_PASSWORD = 'nxNE WhDS NBXX rX0F VpSm sfH2'  # вставьте ваш пароль (или Application Password)
 
 bot = Bot(token=TELEGRAM_BOT_TOKEN)
 
