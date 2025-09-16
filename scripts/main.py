@@ -1,40 +1,15 @@
-
+import os
 import requests
-import time
+import asyncio
 from telegram import Bot
 
-# Ваши данные
-TELEGRAM_BOT_TOKEN = '7538707363:AAFgCzDNTHzdn7stuXAxltnp50uEX9PrOZc'  # ваш токен
-TELEGRAM_CHANNEL_ID = '@printtehnics'  # замените на ваш канал или ID
+TELEGRAM_BOT_TOKEN = os.environ['TELEGRAM_BOT_TOKEN']
+WP_USERNAME = os.environ['WP_USERNAME']
+WP_PASSWORD = os.environ['WP_PASSWORD']
 WP_URL = 'http://printtechlab.ru/wp-json/wp/v2/posts'
-WP_USERNAME = 'telegram bot'  # вставьте ваш логин
-WP_PASSWORD = 'nxNE WhDS NBXX rX0F VpSm sfH2'  # вставьте ваш пароль (или Application Password)
+CATEGORY_ID = 8  # ID вашей категории
 
 bot = Bot(token=TELEGRAM_BOT_TOKEN)
-
-last_update_id = None
-
-def get_updates():
-    global last_update_id
-    updates = bot.get_updates(offset=last_update_id, timeout=10)
-    for update in updates:
-        last_update_id = update.update_id + 1
-        if update.message:
-            process_message(update.message)
-
-def process_message(message):
-    text = message.text
-    title = text[:50]  # Заголовок — первые 50 символов
-    content = text
-
-    # ID категории "Наши работы"
-    category_id = 8
-
-    # Проверка на хэштег
-    if '#НашиРаботы' in text:
-        create_post(title, content, category_id)
-    else:
-        create_post(title, content)
 
 def create_post(title, content, category_id=None):
     data = {
@@ -48,7 +23,19 @@ def create_post(title, content, category_id=None):
     print(f"Status: {response.status_code}")
     print(response.json())
 
-# Основной цикл
-while True:
-    get_updates()
-    time.sleep(4 * 60 * 60)  # 4 часа в секундах
+async def main():
+    last_update_id = None
+    updates = await bot.get_updates(offset=last_update_id, timeout=10)
+    for update in updates:
+        last_update_id = update.update_id + 1
+        if update.message and update.message.text:
+            text = update.message.text
+            title = text[:50]
+            content = text
+            if '#НашиРаботы' in text:
+                create_post(title, content, CATEGORY_ID)
+            else:
+                create_post(title, content)
+
+if __name__ == "__main__":
+    asyncio.run(main())
