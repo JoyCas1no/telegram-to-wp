@@ -19,6 +19,7 @@ def get_vk_posts():
     }
     response = requests.get(url, params=params)
     data = response.json()
+    print("VK API ответ:", data)  # <--- добавьте эту строку
     return data['response']['items']
 
 def create_post(title, content, category_id=None):
