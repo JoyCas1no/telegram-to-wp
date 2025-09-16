@@ -18,6 +18,9 @@ jobs:
       - name: Install dependencies
         run: |
           pip install requests telethon
+      - name: Restore Telethon session file
+        run: |
+          echo "${{ secrets.TG_SESSION_B64 }}" | base64 -d > scripts/session_name.session
       - name: Run Telethon script
         run: python scripts/import_telegram_to_wp.py
         env:
