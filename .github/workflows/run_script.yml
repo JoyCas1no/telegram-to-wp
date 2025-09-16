@@ -1,0 +1,28 @@
+name: Run Telegram to WP script
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'  # каждые 4 часа
+  push:
+    branches:
+      - main  # или ваша ветка
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          pip install requests python-telegram-bot
+      - name: Run script
+        run: |
+          python main.py
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_PASSWORD: ${{ secrets.WP_PASSWORD }}
