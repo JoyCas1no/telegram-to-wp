@@ -21,7 +21,7 @@ jobs:
           pip install requests python-telegram-bot
       - name: Run script
         run: |
-          python main.py
+          python scripts/main.py
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
