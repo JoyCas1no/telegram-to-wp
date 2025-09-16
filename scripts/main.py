@@ -12,6 +12,7 @@ CATEGORY_ID = 8  # ID вашей категории
 bot = Bot(token=TELEGRAM_BOT_TOKEN)
 
 def create_post(title, content, category_id=None):
+    print(f"Создаю пост: {title}")
     data = {
         'title': title,
         'content': content,
@@ -24,12 +25,15 @@ def create_post(title, content, category_id=None):
     print(response.json())
 
 async def main():
+    print("Скрипт запущен")
     last_update_id = None
     updates = await bot.get_updates(offset=last_update_id, timeout=10)
+    print(f"Получено апдейтов: {len(updates)}")
     for update in updates:
         last_update_id = update.update_id + 1
         if update.message and update.message.text:
             text = update.message.text
+            print(f"Обрабатываю сообщение: {text}")
             title = text[:50]
             content = text
             if '#НашиРаботы' in text:
