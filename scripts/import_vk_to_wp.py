@@ -1,12 +1,13 @@
 import requests
 import os
 
+# Переменные окружения
 VK_TOKEN = os.environ['VK_TOKEN']
-GROUP_ID = 'ваш_id_группы'  # только цифры, без 'public'
+GROUP_ID = '232610166'  # ID вашей группы VK (без 'club', только цифры)
 WP_USERNAME = os.environ['WP_USERNAME']
 WP_PASSWORD = os.environ['WP_PASSWORD']
 WP_URL = 'http://printtechlab.ru/wp-json/wp/v2/posts'
-CATEGORY_ID = 8
+CATEGORY_ID = 8  # ID вашей категории в WordPress
 
 def get_vk_posts():
     url = 'https://api.vk.com/method/wall.get'
